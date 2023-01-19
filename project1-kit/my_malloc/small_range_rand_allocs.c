@@ -2,19 +2,20 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "my_malloc.h"
+#include "my_testbag.h"
 
 #define NUM_ITERS 100
 #define NUM_ITEMS 10000
-
-#ifdef FF
 #define MALLOC(sz) ff_malloc(sz)
 #define FREE(p) ff_free(p)
-#endif
-#ifdef BF
-#define MALLOC(sz) bf_malloc(sz)
-#define FREE(p) bf_free(p)
-#endif
+// #ifdef FF
+// #define MALLOC(sz) ff_malloc(sz)
+// #define FREE(p) ff_free(p)
+// #endif
+// #ifdef BF
+// #define MALLOC(sz) bf_malloc(sz)
+// #define FREE(p) bf_free(p)
+// #endif
 
 double calc_time(struct timespec start, struct timespec end) {
   double start_sec = (double)start.tv_sec * 1000000000.0 + (double)start.tv_nsec;

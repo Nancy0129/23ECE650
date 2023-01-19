@@ -1,5 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-#include "my_malloc.h"
+#define SAVE_UNIT sizeof(size_t)
+size_t * free_head = NULL;
+size_t total_size = 0;
 
 size_t get_size(size_t in_size) {
   if (in_size % SAVE_UNIT != 0) {
@@ -7,8 +12,8 @@ size_t get_size(size_t in_size) {
   }
   return in_size / SAVE_UNIT;
 }
-void * cut_space(size_t * pre, size_t * curr, size_t target,size_t curr_size) {
-  if (curr_size-target < 3) {
+size_t * cut_space(size_t * pre, size_t * curr, size_t target,size_t curr_size) {
+  if (curr_size-target <2) {
     // printf("%lu  %lu",)
     if (pre == free_head) {
       free_head = (size_t *)*(curr + 1);
@@ -20,7 +25,7 @@ void * cut_space(size_t * pre, size_t * curr, size_t target,size_t curr_size) {
   else {
     *(curr + target + 1) = *curr;
     *(curr + target + 2) = *(curr + 1);
-     *curr=(size_t)(curr + target + 1);
+    *curr=(size_t)(curr + target + 1);
     if (pre == free_head) {
       free_head = curr + target + 1;
     }
@@ -32,7 +37,7 @@ void * cut_space(size_t * pre, size_t * curr, size_t target,size_t curr_size) {
   return curr + 1;
 }
 
-void * find_ff(size_t target) {
+size_t * find_ff(size_t target) {
   size_t * curr = free_head;
   size_t curr_size;
   size_t * pre = free_head;
