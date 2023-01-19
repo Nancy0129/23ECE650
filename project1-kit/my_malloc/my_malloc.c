@@ -1,17 +1,5 @@
 
 #include "my_malloc.h"
-/*
-// Padding the input size to the multiple of save unit
-size_t padding(size_t in_size) {
-  // If it is not a multiple of save unit
-  if (in_size % SAVE_UNIT != 0) {
-    //padding it to the smallest multiple of save unit larger than it
-    return in_size - in_size % SAVE_UNIT + SAVE_UNIT;
-  }
-  // Else, directly return the input of size
-  return in_size;
-}
-*/
 
 size_t get_size(size_t in_size) {
   if (in_size % SAVE_UNIT != 0) {
@@ -57,6 +45,7 @@ void * ff_malloc(size_t size) {
   if (res == NULL) {
     res = sbrk((size + 1) * SAVE_UNIT);
     *res = (size_t)(res + size + 1);
+    total_size += (size + 1) * SAVE_UNIT;
     return res + 1;
   }
   return res;
@@ -88,4 +77,19 @@ void ff_free(void * ptr) {
     *(to_free + 1) = *((size_t *)(*to_free) + 1);
     *to_free = *(size_t *)(*to_free);
   }
+}
+
+unsigned long get_data_segment_size() {
+  return total_size;
+}
+
+unsigned long get_data_segment_free_space_size() {
+  unsigned long res = 0;
+  size_t * curr = free_head;
+  while (curr != NULL) {
+    res += *curr - (unsigned long)curr;
+    curr = (size_t *)*(curr + 1);
+    //printf("%lu,   %lu\n", res, (size_t)curr);
+  }
+  return res;
 }

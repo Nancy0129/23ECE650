@@ -4,9 +4,7 @@
 
 #define SAVE_UNIT sizeof(size_t)
 size_t * free_head = NULL;
-// Padding the input size to the multiple of save unit
-//size_t padding(size_t in_size);
-
+size_t total_size = 0;
 //First Fit malloc/free
 void * ff_malloc(size_t size);
 void ff_free(void * ptr);
