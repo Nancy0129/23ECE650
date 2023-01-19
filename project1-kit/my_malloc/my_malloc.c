@@ -8,7 +8,7 @@ size_t get_size(size_t in_size) {
   return in_size / SAVE_UNIT;
 }
 void * cut_space(size_t * pre, size_t * curr, size_t target,size_t curr_size) {
-  if (curr_size-target < 3) {
+  if (curr_size-target < 2) {
     // printf("%lu  %lu",)
     if (pre == free_head) {
       free_head = (size_t *)*(curr + 1);
@@ -20,7 +20,7 @@ void * cut_space(size_t * pre, size_t * curr, size_t target,size_t curr_size) {
   else {
     *(curr + target + 1) = *curr;
     *(curr + target + 2) = *(curr + 1);
-     *curr=(size_t)(curr + target + 1);
+    *curr=(size_t)(curr + target + 1);
     if (pre == free_head) {
       free_head = curr + target + 1;
     }
@@ -61,6 +61,9 @@ void * ff_malloc(size_t size) {
 }
 
 void ff_free(void * ptr) {
+  if(ptr==NULL){
+    return;
+  }
   // printf("2");
   size_t * to_free = (size_t *)ptr - 1;
   if (free_head == NULL) {
