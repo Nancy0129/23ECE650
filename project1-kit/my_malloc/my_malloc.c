@@ -17,7 +17,12 @@ void * cut_space(size_t * pre, size_t * curr, size_t target) {
     }
   }
   else {
-    *pre = (size_t)(curr + target + 1);
+    if (pre == free_head) {
+      free_head = curr + target + 1;
+    }
+    else {
+      *pre = (size_t)(curr + target + 1);
+    }
     *(curr + target + 1) = *curr;
     *(curr + target + 2) = *(curr + 1);
   }
@@ -61,20 +66,29 @@ void ff_free(void * ptr) {
   size_t * curr = free_head;
   size_t * prev = free_head;
   while (curr != NULL && (size_t)curr < (size_t)to_free) {
-    prev = curr + 1;
+    prev = curr;
     curr = (size_t *)*(curr + 1);
   }
   curr = prev;
+
   if (*curr == (size_t)to_free) {
     *curr = *to_free;
     to_free = curr;
   }
   else {
-    *(to_free + 1) = *(curr + 1);
-    *(curr + 1) = (size_t)to_free;
+    if (curr == free_head) {
+      *(to_free + 1) = (size_t)free_head;
+      free_head = to_free;
+    }
+
+    else {
+      *(to_free + 1) = *(curr + 1);
+      *(curr + 1) = (size_t)to_free;
+    }
   }
+
   if (*(to_free + 1) == *to_free) {
-    *(to_free + 1) = *((size_t *)(*to_free) + 1);
+    *(to_free + 1) = *(((size_t *)(*to_free)) + 1);
     *to_free = *(size_t *)(*to_free);
   }
 }

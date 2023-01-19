@@ -123,6 +123,7 @@ int main(int argc, char * argv[]) {
   size = 32;
   expected_sum += size * size;
   array[9] = (int *)MALLOC(size * sizeof(int));
+  printf("14_0/n");
   for (i = 0; i < size; i++) {
     array[9][i] = size;
   }  //for i
