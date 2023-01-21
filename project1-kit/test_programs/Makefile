@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-O3 -fPIC
-WDIR=`pwd`/..
+WDIR=../my_malloc
 
 TARGETS= ff_equal_size_allocs  ff_small_range_rand_allocs  ff_large_range_rand_allocs  ff_mymalloc_test  ff_mymalloc_test2  ff_mymalloc_test3
 

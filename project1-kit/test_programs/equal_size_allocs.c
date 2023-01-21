@@ -38,10 +38,13 @@ bool FREE_WITH_CHECK(void* p, size_t sz) {
     int i;
     unsigned char* cp = p;
     for (i=0; i<sz; i++, cp++) {
+      
         if (*cp != h) {
             r = false;
+            
             printf("ERROR: Content check failed while freeing %p!\n", p);
-            //printf("p=%p cp=%p *cp=%x h=%x\n",p,cp,*cp,h);
+            printf("p=%p cp=%p *cp=%x h=%x\n",p,cp,*cp,h);
+            // exit(EXIT_FAILURE);
             break;
         }
     }
@@ -100,14 +103,16 @@ int main(int argc, char *argv[])
 
   for (i=0; i < num_iters; i++) {
     printf("\rIteration %5d / %5d (%.1f%%)", i, num_iters, (float)i/num_iters*100); fflush(stdout);
-    for (j=0; j < 1000; j++) {
+    for (j=0; j < 1000; j++) {      
       array[j] = (int *)MALLOC_WITH_CHECK(ALLOC_SIZE);
     } //for j
 
     for (j=1000; j < NUM_ITEMS; j++) {
-      array[j] = (int *)MALLOC(ALLOC_SIZE);
+      
+      array[j] = (int *)MALLOC_WITH_CHECK(ALLOC_SIZE);
+      // printf("%d\n",j);
       FREE_WITH_CHECK(array[j-1000],ALLOC_SIZE);
-
+      // printf("done \n");
       if ((i==num_iters/2) && (j==NUM_ITEMS/2)) {
        //Record fragmentation halfway through (try to represent steady state)
        data_segment_size = get_data_segment_size();
