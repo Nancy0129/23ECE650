@@ -14,10 +14,18 @@ void * tryInit() {
   free_head = free_head + 3;
 }
 int main(void) {
+  
   tryInit();
   tryInit();
   tryInit();
   tryInit();
-  printf("NULL: %lu\n", (size_t)NULL);
+  // printf("NULL: %lu\n", (size_t)NULL);
+  size_t *a;
+  size_t*b;
+  if(*a==20){
+    printf("%lu",(size_t)b);
+  }
+  printf("%lu\n",(size_t)b);
+  printf("%lu\n",*a);
   return 0;
 }

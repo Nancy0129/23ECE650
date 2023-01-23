@@ -43,8 +43,10 @@ bool FREE_WITH_CHECK(void* p, size_t sz) {
             r = false;
             
             printf("ERROR: Content check failed while freeing %p!\n", p);
+            printf("ERROR: Content check failed while freeing %lu!\n", (size_t)p);
+
             printf("p=%p cp=%p *cp=%x h=%x\n",p,cp,*cp,h);
-            // exit(EXIT_FAILURE);
+            exit(EXIT_FAILURE);
             break;
         }
     }
@@ -106,10 +108,10 @@ int main(int argc, char *argv[])
     for (j=0; j < 1000; j++) {      
       array[j] = (int *)MALLOC_WITH_CHECK(ALLOC_SIZE);
     } //for j
-
+    // printf("\n Enter!!\n\n");
     for (j=1000; j < NUM_ITEMS; j++) {
       
-      array[j] = (int *)MALLOC_WITH_CHECK(ALLOC_SIZE);
+      array[j] = (int *)MALLOC(ALLOC_SIZE);
       // printf("%d\n",j);
       FREE_WITH_CHECK(array[j-1000],ALLOC_SIZE);
       // printf("done \n");
