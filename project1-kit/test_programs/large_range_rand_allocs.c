@@ -113,8 +113,7 @@ int main(int argc, char *argv[])
   for (i=0; i < NUM_ITEMS; i++) {
     malloc_items[0][i].address = (int *)MALLOC_WITH_CHECK(malloc_items[0][i].bytes);
   } //for i
-
-
+  
   //Start Time
   clock_gettime(CLOCK_MONOTONIC, &start_time);
 

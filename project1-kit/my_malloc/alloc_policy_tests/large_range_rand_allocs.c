@@ -66,7 +66,8 @@ int main(int argc, char *argv[])
     free_list[i] = free_list[j];
     free_list[j] = tmp;
   } //while
-
+  
+  
 
   for (i=0; i < NUM_ITEMS; i++) {
     malloc_items[0][i].address = (int *)MALLOC(malloc_items[0][i].bytes);
