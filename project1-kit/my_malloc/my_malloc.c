@@ -175,3 +175,33 @@ unsigned long get_data_segment_free_space_size() {
   }
   return res;
 }
+
+// int main(void){
+//   int * a[10];
+//   for(int i=0;i<10;i++){
+//     a[i]=ff_malloc(sizeof(int)*(i+1)*10);
+//   }
+//   unsigned long my_free_size=get_data_segment_free_space_size();
+//   unsigned long my_total_size=get_data_segment_size();
+//   printf("Totoal size: %lu, Free size: %lu\n",my_total_size,my_free_size);
+//   for(int i=0;i<10;i++){
+//     ff_free(a[i]);
+//   }
+//   my_free_size=get_data_segment_free_space_size();
+//   my_total_size=get_data_segment_size();
+//   printf("Totoal size: %lu, Free size: %lu\n",my_total_size,my_free_size);
+//   int * b =ff_malloc(2344);
+//   my_free_size=get_data_segment_free_space_size();
+//   my_total_size=get_data_segment_size();
+//   printf("Totoal size: %lu, Free size: %lu\n",my_total_size,my_free_size);
+//   ff_free(b);
+//   a[0]=ff_malloc(1164);
+//   my_free_size=get_data_segment_free_space_size();
+//   my_total_size=get_data_segment_size();
+//   printf("Totoal size: %lu, Free size: %lu\n",my_total_size,my_free_size);
+//   a[1]=ff_malloc(1160);
+//   my_free_size=get_data_segment_free_space_size();
+//   my_total_size=get_data_segment_size();
+//   printf("Totoal size: %lu, Free size: %lu\n",my_total_size,my_free_size);
+//   return 0;
+// }
