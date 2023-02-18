@@ -10,12 +10,19 @@ int main(int argc, char *argv[]){
     //Begin connection part
     const char *hostname = argv[1];
     const char *port = argv[2];
+    char self_hostname[512];
+    if(gethostname(self_hostname, sizeof(self_hostname))==-1){
+        cerr<<"Can not get host name correctly!\n";
+        return EXIT_FAILURE;
+    }
+    cout<<self_hostname<<endl;
     int player_id;
     int num_player;
     vector<int> select_ports;
     Player_info left_player;
     int listener,left_fd, right_fd;
     int master_fd = request_connection(hostname,port);
+    // cout<<"Connect success!\n";
     select_ports.push_back(master_fd);
     unsigned short int listen_port;
     try_recv(master_fd, &player_id, sizeof(player_id), MSG_WAITALL);
@@ -24,6 +31,7 @@ int main(int argc, char *argv[]){
     if(player_id==0){
         listener=build_listen_socket("");
         listen_port = get_port(listener);
+        send(master_fd,&self_hostname,sizeof(self_hostname),0);
         send(master_fd,&listen_port,sizeof(listen_port),0);
         right_fd=player_accept(listener);
         select_ports.push_back(right_fd);
@@ -47,6 +55,7 @@ int main(int argc, char *argv[]){
         if(num_player>2){
             listener=build_listen_socket("");
             listen_port = get_port(listener);
+            send(master_fd,&self_hostname,sizeof(self_hostname),0);
             send(master_fd,&listen_port,sizeof(listen_port),0);
             right_fd=player_accept(listener);
             select_ports.push_back(right_fd);

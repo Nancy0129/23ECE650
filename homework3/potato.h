@@ -18,7 +18,7 @@ typedef struct Potato_t Potato;
 
 struct Player_info_t{
     int socket_fd;
-    char hostname[64];
+    char hostname[512];
     unsigned short int port;
 };
 typedef struct Player_info_t Player_info;
@@ -124,7 +124,7 @@ Player_info master_accpet(int socket_fd){
     cerr << "Error: cannot accept connection on master listening socket" << endl;
     exit(EXIT_FAILURE);
   }
-  sprintf(player.hostname, "%s", inet_ntoa(((struct sockaddr_in*)&socket_addr)->sin_addr));
+//   sprintf(player.hostname, "%s", inet_ntoa(((struct sockaddr_in*)&socket_addr)->sin_addr));
   player.socket_fd=player_fd;
   return player;
 }
@@ -157,4 +157,5 @@ unsigned short int get_port(int sockfd){
     }
     return ntohs(((struct sockaddr_in*)&socket_add)->sin_port);
 }
+
 

@@ -27,7 +27,9 @@ int main(int argc, char *argv[]){
         Player_info player0 = master_accpet(listener);
         send(player0.socket_fd, &ind, sizeof(ind), 0);
         send(player0.socket_fd, &num_players, sizeof(num_players), 0);
+        try_recv(player0.socket_fd,&player0.hostname,sizeof(player0.hostname),MSG_WAITALL);
         try_recv(player0.socket_fd, &player0.port, sizeof(player0.port), MSG_WAITALL);
+
         player_list.push_back(player0);    
     
         for (int i=1;i<num_players;i++){
@@ -36,6 +38,7 @@ int main(int argc, char *argv[]){
             send(player.socket_fd, &num_players, sizeof(num_players), 0);
             send(player.socket_fd,&(player_list[i-1]), sizeof(player_list[i-1]),0);    
             if(num_players>2){
+                try_recv(player.socket_fd,&player.hostname,sizeof(player.hostname),MSG_WAITALL);
                 try_recv(player.socket_fd, &player.port, sizeof(player.port), MSG_WAITALL);
             }     
             if(i>1){                
