@@ -5,17 +5,20 @@
 #include <unistd.h>
 #include <vector>
 #include <arpa/inet.h>
+#include <sys/select.h>
+#include <algorithm>
+#include <assert.h> 
 using namespace std;
 struct Potato_t{
 int num_hops;
-int trace[512];
 int curr_num;
+int trace[512];
 };
 typedef struct Potato_t Potato;
 
 struct Player_info_t{
     int socket_fd;
-    char hostname[16];
+    char hostname[64];
     unsigned short int port;
 };
 typedef struct Player_info_t Player_info;
@@ -72,7 +75,6 @@ int build_listen_socket(const char *port){
         cerr << "  (" << hostname << "," << port << ")" << endl;
         exit(EXIT_FAILURE);
     }
-    // cout<<ntohs(((struct sockaddr_in*) host_info_list->ai_addr)->sin_port)<<endl;
     freeaddrinfo(host_info_list);
     return socket_fd;
 }
@@ -123,7 +125,6 @@ Player_info master_accpet(int socket_fd){
     exit(EXIT_FAILURE);
   }
   sprintf(player.hostname, "%s", inet_ntoa(((struct sockaddr_in*)&socket_addr)->sin_addr));
-//   player.hostname= inet_ntoa(((struct sockaddr_in*)&socket_addr)->sin_addr);
   player.socket_fd=player_fd;
   return player;
 }
@@ -148,11 +149,10 @@ int try_recv(int sockfd, void *buf, int len, int flags){
 }
 unsigned short int get_port(int sockfd){
     struct sockaddr_storage socket_add;
-    // struct sockaddr  socket_add;
     socklen_t add_len = sizeof(socket_add);
     int status = getsockname(sockfd,(struct sockaddr*)&socket_add,&add_len);
     if(status==-1){
-        cerr << "Error: cannot get port corretly" << endl;
+        cerr << "Error: cannot get port number corretly" << endl;
         exit(EXIT_FAILURE);
     }
     return ntohs(((struct sockaddr_in*)&socket_add)->sin_port);
