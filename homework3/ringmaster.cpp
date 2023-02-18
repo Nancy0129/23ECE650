@@ -58,7 +58,7 @@ int main(int argc, char *argv[]){
     memset(&potato, 0, sizeof(potato));
     potato.curr_num=0;
     potato.num_hops=num_hops;
-    // int random = 0;
+    srand((unsigned int)time(NULL));
     int random = rand() % num_players;
 
     //Pass the potato
