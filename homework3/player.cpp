@@ -15,7 +15,7 @@ int main(int argc, char *argv[]){
         cerr<<"Can not get host name correctly!\n";
         return EXIT_FAILURE;
     }
-    cout<<self_hostname<<endl;
+    // cout<<self_hostname<<endl;
     int player_id;
     int num_player;
     vector<int> select_ports;
