@@ -6,23 +6,3 @@ PLAYER_ID TEAM_ID UNIFORM_NUM FIRST_NAME LAST_NAME MPG PPG RPG APG SPG BPG
 130 10 32 Steve Vasturia 35 13 4 3 1.2 0.1
 153 12 3 Andrew WhiteIII 37 19 5 1 1.6 0.4
 154 12 20 Tyler Lydon 36 13 9 2 1.0 1.4
-
-     name      |   name    
----------------+-----------
- BostonCollege | Maroon
- Clemson       | Orange
- Duke          | DarkBlue
- FloridaState  | Maroon
- GeorgiaTech   | Gold
- Louisville    | Red
- Miami         | Green
- NCSU          | Red
- NotreDame     | Gold
- Pittsburgh    | Black
- Syracuse      | Orange
- UNC           | LightBlue
- Virginia      | Orange
- VirginiaTech  | Maroon
- WakeForest    | Gold
-
- 
